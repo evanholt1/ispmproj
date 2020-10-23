@@ -14,3 +14,4 @@ const services = [
     "Physiotherapy"
 ]
 
+module.exports = services;

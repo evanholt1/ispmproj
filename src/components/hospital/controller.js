@@ -2,6 +2,8 @@ const Hospital = require('./model');
 
 module.exports = hospitalController = {
     getMany: (limit, after) => {
+      limit = +limit;
+
       if(!limit)
         return Hospital.find().lean().exec();
       if(!after) 
