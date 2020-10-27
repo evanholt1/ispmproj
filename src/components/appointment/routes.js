@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router({mergeParams: true})
 
 const controller = require('./controller');
+const { validateSession } = require('../../utils/validateSession');
 
 router.get('/', async(req,res) => {
     const result = await controller.getMany(req.query.limit, req.query.after, req.query.service);
@@ -15,19 +16,19 @@ router.get('/:id', async(req,res) => {
     res.send(result);
 })
 
-router.post('/', async(req,res) => {
+router.post('/', validateSession, async(req,res) => {
     const result = await controller.addMany(req.body);
 
     res.send(result);
 })
 
-router.patch('/', async(req,res) => {
+router.patch('/', validateSession, async(req,res) => {
     const result = await controller.editMany(req.body);
 
     res.send(result);
 })
 
-router.delete('/', async(req,res) => {
+router.delete('/', validateSession, async(req,res) => {
     const result = await controller.removeMany(req.body);
 
     res.send(result);

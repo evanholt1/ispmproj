@@ -1,55 +1,61 @@
 const User = require('./model');
+const { options, signupSchema, signinSchema } = require('./validation');
+const { InputValidationError, EntityAlreadyExistsError, EntityDoesntExistError } = require('../../utils/errors')
+const { Response } = require('../../utils/response')
 
 module.exports = userController = {
 
     signup: async (signupInput) => {
-        let { mobileNumber } = signupInput;
-        const mobileNumberAlreadyExists = await User.findOne({ mobileNumber }).lean().exec();
-        if(mobileNumberAlreadyExists){
-            return {
-                success: false,
-                message: "Number already in use!",
-                status: 401
-            }
-        }       
-    
-        await User.create(signupInput);
+        try {
+          await signupSchema.validateAsync(signupInput, options)
+        }
+        catch (err) { 
+          throw new InputValidationError(err.details[0].path[0], err.details[0].message)
+        }
 
-        return {
-            success:true,
-            status:200,
-            message: "New User Successfully Created!"
-        };
+        let { email } = signupInput
+
+        const emailAlreadyExists = await User.findOne({ email }).lean().exec()
+
+        if(emailAlreadyExists)
+            throw new EntityAlreadyExistsError("email", "User")   
+    
+        await User.create(signupInput)
+
+        return new Response("User Successfully Created!", null, false, 200)
       },
     
       signin: async (signinInput, req) => { 
-        const user = await User.findOne({ mobileNumber: signinInput.mobileNumber }).lean().exec();
+        if(req.session._id)
+          return new Response("Already Logged In!", null, false, 200)
+
+        try {
+          await signinSchema.validateAsync(signinInput);
+        }
+        catch (err) { 
+          throw new InputValidationError(err.details[0].path[0], err.details[0].message);
+        }
+
+        const { email, password } = signinInput
+
+        const user = await User.findOne({ email, password }).lean().exec();
 
         if(!user) 
-            return {
-                success: false,
-                status: 401,
-                message: "Phone Number is wrong! Try again!"
-            };
+            throw new EntityDoesntExistError("User")
         
         req.session._id = user._id;
         req.session.loginDate = Date.now();
     
-        return {
-            success: true,
-            status: 200,
-            message: "User successfully logged in"
-        };
+        return new Response("User successfully logged in",null, false, 200);
       },
 
       signout: async (req, res) => {
+        if(!req.session._id) 
+          return new Response("Already Logged Out!", null, false, 200)
+
         await destroySessionPromise(req, res);
 
-        return {
-            success: true,
-            status: 200,
-            message: "User successfully logged out"
-        }
+        return new Response("User successfully logged out", null, false, 200)
       }
 }
 
@@ -59,8 +65,10 @@ const destroySessionPromise = (req,res) => {
     return new Promise( (resolve,reject) => 
         {
             req.session.destroy(function(err) {
-                if(err) reject(null);
+                if(err) reject(err);
+
                 res.clearCookie("US");
+
                 resolve(null);
             })
         }
