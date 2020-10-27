@@ -2,13 +2,16 @@
     Exports a function which checks the existence, then the validity of a session,
     based on a sessionDuration variable. this flow mimics the JWT access/refresh
     token flow, but with server-side sessions, allowing users to stay logged in,
-    while 
+
+    USED ON PROTECTED ROUTES
 */
 
-exports.validateSession = async (req,res) => {
+const { Response } = require('./response')
+
+exports.validateSession = async (req, res, next) => {
     // if user doesnt have a populated session. _id is just a common field to put in the session
     if(!req.session._id) 
-    return null;
+        return new Response("User Is Not Logged In!", null, true, 401)
 
     let { id, cookie, loginDate, ...info } = req.session;
                 
@@ -39,6 +42,6 @@ exports.validateSession = async (req,res) => {
             req.session.id
         );
 
-        return null;
+        return next();
     }
 }
