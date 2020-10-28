@@ -1,3 +1,4 @@
 node_modules
 notes.txt
 .vscode
+src/config/.env
