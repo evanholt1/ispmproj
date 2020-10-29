@@ -1,0 +1,56 @@
+body{
+background-image: url("../img/cover.png");
+  background-color: #cccccc; 
+  height: 500px; 
+  background-position: center;
+  background-repeat: no-repeat; 
+  background-size: cover; 
+
+}
+.Home-page{
+    margin-left: 57rem;
+}
+
+.Home-page .title h1{
+font-size: 4rem;
+color: #77d2ff;
+}
+
+.Home-page .title .text{
+    color: #cce5e1;
+    margin-left: 10px;
+}
+
+.Home-page .form-all{
+    margin-top: 11rem;
+    color: #cce5e1;
+}
+
+.form-all .btn{
+    background-color: #77d2ff;
+    border-radius: 0.7rem;
+    margin-left: 6.6rem;
+    margin-top: 1rem;
+}
+
+.form-all .form-text{
+    margin-left: 5px;
+    margin-top: 9px;
+    color: #cce5e1;
+}
+
+.form-all .form-control1{
+    margin-top: -15px;
+}
+
+.form-all .sign-up {
+    margin-left: 9px;
+}
+.form-all .sign-up a{
+    color: #cce5e1;
+}
+
+.form-all .sign-up a:hover{
+    text-decoration: none;
+    color: #77d2ff;
+}

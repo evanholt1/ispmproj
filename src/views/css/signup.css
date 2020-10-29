@@ -1,0 +1,47 @@
+.body{
+    background-color: azure;
+}
+
+.form-al .group-form{
+margin-left: 34rem;
+margin-top: 5rem;
+border-color: #00b19c;
+border-width: 1rem;
+}
+
+.form-al .group-form .btn{
+    margin-left: 7rem;
+    margin-top: 1rem;
+}
+
+.form-al .group-form .head h1{
+color: #00b19c;
+text-align: center;
+font-size: 3rem;
+}
+
+.form-al .group-form .head p{
+font-size: 23px;
+text-align: center;
+font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.navbar{
+    background-color: #00b19c;
+}
+
+.navbar .navbar-brand{
+    font-size: 33px;
+    color: #e5f5f3;
+    
+}
+
+.nav-item svg{
+margin-left: 77rem;
+color: #e5f5f3;
+}
+
+.card-section .card{
+    width: 18rem;
+    margin-left: 73rem;
+}
