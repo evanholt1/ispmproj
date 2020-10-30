@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
+const { pointSchema } = require('../../utils/pointSchema')
+
 const UserSchema = new Schema({
     name: {
         type: String
@@ -12,6 +14,9 @@ const UserSchema = new Schema({
 
     password: {
         type: String
+    },
+    location: {
+      type: pointSchema
     }
 });
 

@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const services = require('../../utils/services');
+const { pointSchema } = require('../../utils/pointSchema')
 
 const AppointmentSchema = new Schema({
     user: {
@@ -12,9 +13,9 @@ const AppointmentSchema = new Schema({
         type: String,
         enum: services
     },
-    location: { // todo: connect with google maps api
-        type: String
-    }
+    location: {
+        type: pointSchema
+      }
 });
 
 module.exports = mongoose.model('Appointment', AppointmentSchema, "appointments");
