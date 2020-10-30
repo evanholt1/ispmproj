@@ -1,7 +1,7 @@
 ISPM Project 
 =
 ---
-Root: www.ispmproj.herokuapp.com
+Root: https://ispmproj.herokuapp.com
 -
 ---
 ## Routes:

@@ -47,21 +47,21 @@ module.exports = appointmentController = {
     },
 
     getOneById: async(id) => {
-      const appointment = await Appointment.findById(id).lean().exec();
+      const appointment = await Appointment.findById(id).lean().exec()
       
-      return new Response(null, appointment, false, 200);
+      return new Response(null, appointment, false, 200)
     },
   
     addMany: async(appointmentsInputs) => {
-      let appointments = []; 
+      let appointments = []
 
       let appointmentsAdded = await Appointment.create(appointmentsInputs); // create accepts an array, and deals with it properly
     
       appointmentsAdded.forEach(appointment => {
-        appointments.push(appointment.toObject( { getters:true } ));
+        appointments.push(appointment.toObject( { getters:true } ))
       });
 
-      return new Response(null, appointments, false, 200);
+      return new Response(null, appointments, false, 200)
     },
   
     editMany: async(appointmentsInputs) => {

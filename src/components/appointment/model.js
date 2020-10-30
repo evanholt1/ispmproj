@@ -12,8 +12,13 @@ const AppointmentSchema = new Schema({
         type: String,
         enum: services
     },
-    location: { // todo: connect with google maps api
-        type: String
+    servicelocation: { // todo: connect with google maps api
+        longtitude: {
+            type: Number
+        },
+        langtitude: {
+            type: Number
+        }
     }
 });
 
