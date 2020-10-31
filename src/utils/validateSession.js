@@ -11,7 +11,7 @@ const { Response } = require('./response')
 exports.validateSession = async (req, res, next) => {
     // if user doesnt have a populated session. _id is just a common field to put in the session
     if(!req.session._id) 
-        return new Response("User Is Not Logged In!", null, true, 401)
+        return res.status(401).json(new Response("User Is Not Logged In!", null, true))
 
     let { id, cookie, loginDate, ...info } = req.session;
                 
@@ -42,6 +42,7 @@ exports.validateSession = async (req, res, next) => {
             req.session.id
         );
 
-        return next();
+        next();
     }
+    next();
 }
