@@ -14,8 +14,11 @@ const AppointmentSchema = new Schema({
         enum: services
     },
     location: {
-        type: pointSchema
-      }
+      type: pointSchema
+    },
+    date: {
+      type: Date
+    }
 });
 
 module.exports = mongoose.model('Appointment', AppointmentSchema, "appointments");
