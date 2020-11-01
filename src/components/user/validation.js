@@ -7,9 +7,9 @@ exports.signupSchema = Joi.object({
 
     password: Joi.string().min(3).max(40).required(),
 
-    passwordConfirmation: Joi.string().required().valid(Joi.ref('password')).messages({"any.only":"passwords must match"}),
-})
-.with('password', 'passwordConfirmation');
+    passwordConfirmation: Joi.string().required().valid(Joi.ref('password')).messages({ "any.only": "passwords must match" }),
+}).with('password', 'passwordConfirmation');
+
 
 exports.signinSchema = Joi.object({
     email: Joi.string().email().required(),
@@ -19,8 +19,8 @@ exports.signinSchema = Joi.object({
 
 exports.options = {
     errors: {
-      wrap: {
-        label: ''
-      }
+        wrap: {
+            label: ''
+        }
     }
-  };
+};

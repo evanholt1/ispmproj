@@ -6,7 +6,7 @@ const { pointSchema } = require('../../utils/pointSchema')
 
 const AppointmentSchema = new Schema({
     user: {
-        type: Schema.Types.ObjectId, 
+        type: Schema.Types.ObjectId,
         ref: 'User'
     },
     service: {
@@ -14,10 +14,10 @@ const AppointmentSchema = new Schema({
         enum: services
     },
     location: {
-      type: pointSchema
+        type: pointSchema
     },
     date: {
-      type: Date
+        type: Date
     }
 });
 
