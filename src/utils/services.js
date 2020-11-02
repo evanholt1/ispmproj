@@ -1,11 +1,10 @@
-const services = [
+// lists services and their departments
+const serviceNames = [
     "Blood Collection",
     "Medicine Delivery to Home",
+    "Blood Sugar Test",
     "Hemodialysis Request",
-
-    // indices higher than 2 in .indexOf mean at-home tests (medical home services)
-    "Blood Sugar Test (Glucometer)",
-    "ECG at Home",
+    "ECG",
     "Nebulization",
     "Tonometry",
     "Vital Signs Checkup",
@@ -14,4 +13,82 @@ const services = [
     "Physiotherapy"
 ]
 
-module.exports = services;
+const services = [{
+        name: "Blood Collection",
+        departments: [
+            "Nurse",
+            "Lab"
+        ]
+    },
+    {
+        name: "Medicine Delivery to Home",
+        departments: [
+            "Pharmacy",
+            "Delivery"
+        ]
+    },
+    {
+        name: "Blood Sugar Test",
+        departments: [
+            "Nurse"
+        ]
+    },
+    {
+        name: "Hemodialysis Request",
+        departments: [
+            "Delivery"
+        ]
+    },
+    {
+        name: "ECG",
+        departments: [
+            "Nurse",
+            "Doctor"
+        ]
+    },
+    {
+        name: "Nebulization",
+        departments: [
+            "Nurse"
+        ]
+    },
+    {
+        name: "Tonometry",
+        departments: [
+            "Nurse",
+            "Doctor"
+        ]
+    },
+    {
+        name: "Vital signs checkup",
+        departments: [
+            "Nurse",
+            "Doctor"
+        ]
+    },
+    {
+        name: "IM and IV injections",
+        departments: [
+            "Nurse"
+        ]
+    },
+    {
+        name: "Post-operative follow-up",
+        departments: [
+            "Nurse",
+            "Doctor"
+        ]
+    },
+    {
+        name: "Physiotherapy",
+        departments: [
+            "Physiotherapist"
+        ]
+    },
+
+];
+
+module.exports = {
+    services,
+    serviceNames
+};
