@@ -18,6 +18,10 @@ const AppointmentSchema = new Schema({
     },
     date: {
         type: Date
+    },
+    state: { // blood collection,hemodialysis, medicine delivery, home medical services have different states. 
+        // business logic code will control this
+        type: String
     }
 });
 

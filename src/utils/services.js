@@ -88,7 +88,34 @@ const services = [{
 
 ];
 
+const serviceStates = {
+    bloodCollectionStates: [
+        "collecting clood",
+        "delivering to lab",
+        "saving results",
+        "fufilled"
+    ],
+    hemodialysisStates: [
+        "transfering patient",
+        "fufilled"
+    ],
+    medicineDeliveryStates: [
+        "preparing prescription",
+        "delivering medicine",
+        'requesting signature',
+        'fufilled'
+    ],
+    homeMedicalServicesStates: [
+        'conducting service',
+        'recording results',
+        'taking action',
+        'fufilled'
+    ]
+};
+
+
 module.exports = {
     services,
-    serviceNames
+    serviceNames,
+    serviceStates
 };
