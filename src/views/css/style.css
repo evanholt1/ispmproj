@@ -1,56 +1,88 @@
-body{
-background-image: url("../img/cover.png");
-  background-color: #cccccc; 
-  height: 500px; 
-  background-position: center;
-  background-repeat: no-repeat; 
-  background-size: cover; 
-
+.container-fluid{
+    background-color: #f8f9fb;
 }
-.Home-page{
-    margin-left: 57rem;
-}
-
-.Home-page .title h1{
-font-size: 4rem;
-color: #77d2ff;
-}
-
-.Home-page .title .text{
-    color: #cce5e1;
-    margin-left: 10px;
-}
-
-.Home-page .form-all{
-    margin-top: 11rem;
-    color: #cce5e1;
-}
-
-.form-all .btn{
-    background-color: #77d2ff;
-    border-radius: 0.7rem;
-    margin-left: 6.6rem;
-    margin-top: 1rem;
-}
-
-.form-all .form-text{
-    margin-left: 5px;
-    margin-top: 9px;
-    color: #cce5e1;
-}
-
-.form-all .form-control1{
-    margin-top: -15px;
-}
-
-.form-all .sign-up {
-    margin-left: 9px;
-}
-.form-all .sign-up a{
-    color: #cce5e1;
-}
-
-.form-all .sign-up a:hover{
+.logo{
+    color: #6d8ad0;
+    font-size: 1.7rem;
     text-decoration: none;
-    color: #77d2ff;
+    font-weight: bold;
+}
+.color{
+    color: #6a86cf;
+}
+.nav-li{
+    font-size: 1.1rem;
+}
+.btn-outline {
+    color: white;
+    background-color: #6a86cf;
+    width: 6rem;
+    height: 2.5rem;
+}
+.collapse-color{
+    color: #8ba4cf;
+}
+.text-color{
+    color: #3f557a;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+.border-log{
+    border-color: #f2564a;
+}
+.line{
+    height: 0.1rem;
+}
+.head-text{
+    font-size: 3.5rem;
+    color: #030631;
+}
+.btn-login{
+    background-color: #f2564a;
+    color: white;
+    font-weight: bold;
+    width: 11rem;
+    height: 3rem;
+}
+.description{
+    padding-bottom: 11rem;
+}
+.btn-log{
+    margin: auto;
+    padding-top: 2rem;
+}
+.head-hospital{
+    text-align: center;
+}
+.head-hospital h1{
+    color: #6a86cf;
+    font-size: 3.1rem;
+}
+.head-hospital p{
+    color: #f2564a;
+    font-size: 1.5rem;
+}
+.text-label{
+    color: #f2564a;
+}
+.btn-next{
+    background-color: #6a86cf;
+    color: white;
+    font-weight: bold;
+    height: 2.5rem;
+}
+.group-form{
+    border-radius: 3rem;
+}
+.form-content{
+    padding-bottom: 12.4rem;
+}
+.form-conten{
+    padding-bottom: 2.3rem;
+}
+.btn-book{
+    background-color: #6a86cf;
+    color: white;
+    font-weight: bold;
+    height: 3.5rem;
+    font-size: 1.1rem;
 }
