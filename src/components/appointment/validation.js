@@ -1,13 +1,13 @@
 const Joi = require('joi-oid')
 
-const services = require('../../utils/services')
+const { serviceNames } = require('../../utils/services')
 const { idSchema, idsSchema } = require('../../utils/validation');
 
-
+// change it so you will get datre and time seperately, and merge them later
 const addAppointmentSchema = Joi.object({
     user: Joi.objectId().required(),
 
-    service: Joi.string().valid(...services).required(),
+    service: Joi.string().valid(...serviceNames).required(),
 
     location: Joi.object({
         type: Joi.string().valid("Point").required(),
@@ -15,16 +15,24 @@ const addAppointmentSchema = Joi.object({
         coordinates: Joi.array().items(Joi.number()).required()
     }).required(),
 
+
+
     date: Joi.date().required()
         // supposedly now it accepts yyyy-mm-dd format and validates quite well logically too
         // note that frontend must set seconds to 0, no use for seconds
         // https://www.tutorialspoint.com/remove-seconds-milliseconds-from-date-and-convert-to-iso-string
 })
 
+let tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+tomorrow.setMilliseconds(0)
+tomorrow.setSeconds(0)
+tomorrow.setMinutes(0)
+
 const editAppointmentSchema = Joi.object({
     _id: Joi.objectId().required(),
 
-    service: Joi.string().valid(...services),
+    service: Joi.string().valid(...serviceNames),
 
     location: Joi.object({
         type: Joi.string().valid("Point"),
@@ -32,7 +40,11 @@ const editAppointmentSchema = Joi.object({
         coordinates: Joi.array().items(Joi.number())
     }),
 
-    date: Joi.date()
+    state: Joi.number().integer().min(0).max(5),
+    // must be at least a day in the future
+    date: Joi.date().greater(tomorrow).message(`Date must be greater than ${tomorrow.toLocaleString()}`),
+
+    allocatedStaff: Joi.array().items(Joi.objectId()),
 })
 
 
@@ -43,7 +55,7 @@ exports.getManyAppointmentsSchema = Joi.object({
 
     after: Joi.objectId(),
 
-    service: Joi.string().valid(...services),
+    service: Joi.string().valid(...serviceNames),
 })
 
 exports.addAppointmentsSchema = Joi.array().items(addAppointmentSchema)

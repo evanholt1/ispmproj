@@ -16,8 +16,8 @@ const UserSchema = new Schema({
         type: String
     },
     location: {
-      type: pointSchema
+        type: pointSchema
     }
 });
 
-module.exports = mongoose.model('User',UserSchema,"users");
+module.exports = mongoose.model('User', UserSchema, "users");

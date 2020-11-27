@@ -3,7 +3,7 @@
 
 /* used for all input validation failures */
 class InputValidationError extends Error {
-    constructor(field, message ,...params) {
+    constructor(field, message, ...params) {
         super(params)
         this.field = field
         this.name = "InputValidationError"
@@ -11,28 +11,28 @@ class InputValidationError extends Error {
     }
 }
 
-/* user error classes */ 
-    class EntityAlreadyExistsError extends Error {
-        constructor(field, entity,  ...params) {
-            super(params)
-            this.field = field
-            this.message = entity + " Already Exists"
-        }
+/* user error classes */
+class EntityAlreadyExistsError extends Error {
+    constructor(field, entity, ...params) {
+        super(params)
+        this.field = field
+        this.message = entity + " Already Exists"
     }
+}
 
-    class EntityDoesntExistError extends Error {
-        constructor(entity,  ...params) {
-            super(params)
-            this.message = entity + " Does Not Exist"
-        }
+class EntityDoesntExistError extends Error {
+    constructor(entity, ...params) {
+        super(params)
+        this.message = entity + " Does Not Exist"
     }
+}
 
-    class NotLoggedInError extends Error {
-        constructor(...params) {
-            super(params)
-            this.message = "User Is Not Logged In!"
-        }
+class NotLoggedInError extends Error {
+    constructor(...params) {
+        super(params)
+        this.message = "User Is Not Logged In!"
     }
+}
 
 
 module.exports = errors = {

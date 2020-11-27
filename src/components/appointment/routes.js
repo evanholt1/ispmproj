@@ -39,19 +39,31 @@ router.post('/', validateSession, async(req, res, next) => {
     } catch (err) {
         next(err);
     }
-})
+});
 
 router.patch('/', validateSession, async(req, res, next) => {
-    const result = await controller.editMany(req.body);
+    try {
+        const result = await controller.editMany(req.body);
 
-    res.send(result);
-})
+        const { statusCode, ...response } = result;
+
+        res.status(statusCode).json(response);
+    } catch (err) {
+        next(err);
+    }
+});
 
 router.delete('/', validateSession, async(req, res, next) => {
-    const result = await controller.removeMany(req.body);
+    try {
+        const result = await controller.removeMany(req.body);
 
-    res.send(result);
-})
+        const { statusCode, ...response } = result;
+
+        res.status(statusCode).json(response);
+    } catch (err) {
+        next(err);
+    }
+});
 
 
 module.exports = router;
