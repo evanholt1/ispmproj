@@ -82,7 +82,7 @@ const services = [{
     {
         name: "Physiotherapy",
         departments: [
-            "Physiotherapist"
+            "Physiotherapy"
         ]
     },
 
@@ -90,32 +90,49 @@ const services = [{
 
 const serviceStates = {
     bloodCollectionStates: [
-        "collecting clood",
+        "scheduled",
+        "starting",
+        "collecting blood",
         "delivering to lab",
         "saving results",
         "fufilled"
     ],
     hemodialysisStates: [
+        "scheduled",
+        "starting",
         "transfering patient",
         "fufilled"
     ],
     medicineDeliveryStates: [
+        "scheduled",
+        "starting",
         "preparing prescription",
         "delivering medicine",
         'requesting signature',
         'fufilled'
     ],
     homeMedicalServicesStates: [
+        "scheduled",
+        "starting",
         'conducting service',
         'recording results',
-        'taking action',
+        'taking action', // if no action to take, say 'none'
         'fufilled'
     ]
 };
 
+const serviceDepartments = [
+    "Nurse",
+    "Lab",
+    "Pharmacy",
+    "Delivery",
+    "Doctor",
+    "Physiotherapy"
+]
 
 module.exports = {
     services,
     serviceNames,
-    serviceStates
+    serviceStates,
+    serviceDepartments
 };
