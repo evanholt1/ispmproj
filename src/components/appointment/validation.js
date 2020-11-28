@@ -15,9 +15,7 @@ const addAppointmentSchema = Joi.object({
         coordinates: Joi.array().items(Joi.number()).required()
     }).required(),
 
-
-
-    date: Joi.date().required()
+    date: Joi.date().greater(tomorrow).message(`Date must be greater than ${tomorrow.toLocaleString()}`).required()
         // supposedly now it accepts yyyy-mm-dd format and validates quite well logically too
         // note that frontend must set seconds to 0, no use for seconds
         // https://www.tutorialspoint.com/remove-seconds-milliseconds-from-date-and-convert-to-iso-string
