@@ -1,17 +1,13 @@
-const { boolean, bool } = require('joi');
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
-const { DateTime } = require('luxon');
 
-const { services, serviceDepartments } = require('../../utils/services');
+
+const { serviceDepartments } = require('../../utils/services');
 
 
 const EmployeeSchema = new Schema({
     name: {
         type: String
-    },
-    isFree: {
-        type: Boolean
     },
     busyDates: [{
         type: Date
