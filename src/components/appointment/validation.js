@@ -3,6 +3,12 @@ const Joi = require('joi-oid')
 const { serviceNames } = require('../../utils/services')
 const { idSchema, idsSchema } = require('../../utils/validation');
 
+let tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+tomorrow.setMilliseconds(0)
+tomorrow.setSeconds(0)
+tomorrow.setMinutes(0)
+
 // change it so you will get datre and time seperately, and merge them later
 const addAppointmentSchema = Joi.object({
     user: Joi.objectId().required(),
@@ -21,11 +27,7 @@ const addAppointmentSchema = Joi.object({
         // https://www.tutorialspoint.com/remove-seconds-milliseconds-from-date-and-convert-to-iso-string
 })
 
-let tomorrow = new Date();
-tomorrow.setDate(tomorrow.getDate() + 1);
-tomorrow.setMilliseconds(0)
-tomorrow.setSeconds(0)
-tomorrow.setMinutes(0)
+
 
 const editAppointmentSchema = Joi.object({
     _id: Joi.objectId().required(),
