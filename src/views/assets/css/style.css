@@ -1,9 +1,12 @@
 .container-fluid{
     background-color: #f8f9fb;
 }
+.body{
+    background-color: #f8f9fb;
+}
 .logo{
     color: #6d8ad0;
-    font-size: 1.7rem;
+    font-size: 2rem;
     text-decoration: none;
     font-weight: bold;
 }
@@ -12,6 +15,9 @@
 }
 .nav-li{
     font-size: 1.1rem;
+}
+.form-group.arrow-modal{
+    font-size: 1.3rem;
 }
 .btn-outline {
     color: white;
@@ -99,3 +105,38 @@
 .btn-book{
     border: none;
 }
+.lists{
+    list-style-type: none;
+    padding-left: 0px;
+}
+.option-icon{
+    padding-left: 2rem;
+}
+.thead-font{
+   color: #3f557a;
+    font-size: 1.1rem;
+}
+.id-head{
+   text-align: center;
+}
+/* HIDE RADIO */
+[type=radio] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + .icon-move {
+    cursor: pointer;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + .icon-move {
+    border: solid #6a86cf;
+    border-radius: 100%;
+}
+
+
+
