@@ -12,7 +12,10 @@ const addEmployeeSchema = Joi.object({
     shift: Joi.object().keys({
         start: Joi.number(),
         end: Joi.number()
-    })
+    }),
+    role: Joi.string().valid("employee", "admin").required(),
+
+    email: Joi.string().email().required()
 })
 
 let tomorrow = new Date();
@@ -29,7 +32,9 @@ const editEmployeeSchema = Joi.object({
     shift: Joi.object().keys({
         start: Joi.number(),
         end: Joi.number()
-    })
+    }),
+
+    role: Joi.string().valid("employee", "admin")
 })
 
 

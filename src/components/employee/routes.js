@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router({ mergeParams: true })
 
 const controller = require('./controller');
-const { validateSession } = require('../../utils/validateSession');
+const { validateSession, adminAuthorization } = require('../../utils/identity');
 
 
 router.get('/', async(req, res, next) => {
@@ -29,7 +29,7 @@ router.get('/:id', async(req, res, next) => {
     }
 })
 
-router.post('/', validateSession, async(req, res, next) => {
+router.post('/', validateSession, adminAuthorization, async(req, res, next) => {
     try {
         const result = await controller.addMany(req.body);
 
@@ -41,7 +41,7 @@ router.post('/', validateSession, async(req, res, next) => {
     }
 });
 
-router.patch('/', validateSession, async(req, res, next) => {
+router.patch('/', validateSession, adminAuthorization, async(req, res, next) => {
     try {
         const result = await controller.editMany(req.body);
 
@@ -53,7 +53,7 @@ router.patch('/', validateSession, async(req, res, next) => {
     }
 });
 
-router.delete('/', validateSession, async(req, res, next) => {
+router.delete('/', validateSession, adminAuthorization, async(req, res, next) => {
     try {
         const result = await controller.removeMany(req.body);
 
