@@ -1,0 +1,142 @@
+.container-fluid{
+    background-color: #f8f9fb;
+}
+.body{
+    background-color: #f8f9fb;
+}
+.logo{
+    color: #6d8ad0;
+    font-size: 2rem;
+    text-decoration: none;
+    font-weight: bold;
+}
+.color{
+    color: #6a86cf;
+}
+.nav-li{
+    font-size: 1.1rem;
+}
+.form-group.arrow-modal{
+    font-size: 1.3rem;
+}
+.btn-outline {
+    color: white;
+    background-color: #6a86cf;
+    width: 6rem;
+    height: 2.5rem;
+}
+.collapse-color{
+    color: #8ba4cf;
+}
+.text-color{
+    color: #3f557a;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+.border-log{
+    border-color: #f2564a;
+}
+.line{
+    height: 0.1rem;
+}
+.head-text{
+    font-size: 3.5rem;
+    color: #030631;
+}
+.btn-login{
+    background-color: #f2564a;
+    color: white;
+    font-weight: bold;
+    width: 11rem;
+    height: 3rem;
+}
+.description{
+    padding-bottom: 11rem;
+}
+.btn-log{
+    margin: auto;
+    padding-top: 2rem;
+}
+.head-hospital{
+    text-align: center;
+}
+.head-hospital h1{
+    color: #6a86cf;
+    font-size: 3.1rem;
+}
+.head-hospital p{
+    color: #f2564a;
+    font-size: 1.5rem;
+}
+.text-label{
+    color: #6a86cf;
+}
+.btn-next{
+    background-color: #6a86cf;
+    color: white;
+    font-weight: bold;
+    height: 2.5rem;
+}
+.group-form{
+    border-radius: 3rem;
+}
+.form-content{
+    padding-bottom: 12.4rem;
+}
+.form-conten{
+    padding-bottom: 1.4rem;
+}
+.btn-book{
+    background-color: #6a86cf;
+    color: white;
+    font-weight: bold;
+    height: 3.5rem;
+    font-size: 1.1rem;
+}
+.form-conten .form-group input{
+    background-color: #f8f9fb;
+}
+.form-conten .form-group select{
+    background-color: #f8f9fb;
+    border-radius: 1rem;
+}
+.btn-book:hover{
+    background-color: #f25666;
+}
+.btn-book{
+    border: none;
+}
+.lists{
+    list-style-type: none;
+    padding-left: 0px;
+}
+.option-icon{
+    padding-left: 2rem;
+}
+.thead-font{
+   color: #3f557a;
+    font-size: 1.1rem;
+}
+.id-head{
+   text-align: center;
+}
+/* HIDE RADIO */
+[type=radio] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + .icon-move {
+    cursor: pointer;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + .icon-move {
+    border: solid #6a86cf;
+    border-radius: 100%;
+}
+
+
+

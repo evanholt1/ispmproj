@@ -3,7 +3,9 @@ const express = require('express'),
     mongoose = require('mongoose'),
     session = require('express-session'),
     MongoDBStore = require('connect-mongodb-session')(session),
-    cookieParser = require('cookie-parser');
+    cookieParser = require('cookie-parser'),
+    methodOverride = require('method-override'),
+    path = require('path');
 
 const router = require('./utils/router');
 
@@ -11,6 +13,8 @@ const startServer = async() => {
     const app = express();
 
     app.use(express.json());
+
+
 
     await mongoose.connect(process.env.DB_HOST, {
         useNewUrlParser: true,
@@ -39,7 +43,16 @@ const startServer = async() => {
         name: "US" // User Session
     }));
 
-    app.use("/api", router);
+    app.use(express.static(path.join(__dirname, "views/assets")));
+
+    app.use(methodOverride('_method'));
+
+    app.set('view engine', 'ejs');
+
+    app.set('views', 'src/views/html');
+
+    app.use(router);
+
     const PORT = process.env.PORT || 5000;
 
     app.listen(PORT, () =>
