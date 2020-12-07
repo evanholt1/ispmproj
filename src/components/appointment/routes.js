@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router({ mergeParams: true })
 
 const controller = require('./controller');
-const { validateSession } = require('../../utils/validateSession');
+const { validateSession, employeeAuthorization } = require('../../utils/identity');
 
 
 router.get('/', async(req, res, next) => {

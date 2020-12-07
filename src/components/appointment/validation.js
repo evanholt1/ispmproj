@@ -40,7 +40,7 @@ const editAppointmentSchema = Joi.object({
         coordinates: Joi.array().items(Joi.number())
     }),
 
-    state: Joi.number().integer().min(0).max(5),
+    state: Joi.number().integer().valid(1, -1),
     // must be at least a day in the future
     date: Joi.date().greater(tomorrow).message(`Date must be greater than ${tomorrow.toLocaleString()}`),
 

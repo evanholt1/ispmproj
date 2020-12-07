@@ -13,7 +13,7 @@ module.exports = appointmentController = {
     getOneById: async(id) => {
         await validateInput(validators.getOneAppointmentSchema, id, validators.options);
 
-        const appointment = await Appointment.findById(id).lean().exec();
+        const appointment = await Appointment.findById(id).exec();
 
         return new Response(null, appointment, false, 200)
     },
@@ -27,30 +27,30 @@ module.exports = appointmentController = {
 
         if (!service) {
             if (!limit)
-                return new Response(null, await Appointment.find().lean().exec(), false, 200);
+                return new Response(null, await Appointment.find().exec(), false, 200);
 
             if (!after)
-                return new Response(null, await Appointment.find().limit(limit).lean().exec(), false, 200);
+                return new Response(null, await Appointment.find().limit(limit).exec(), false, 200);
 
-            let appointments = await Appointment.find({ _id: { $gt: after } }).limit(limit).lean().exec();
+            let appointments = await Appointment.find({ _id: { $gt: after } }).limit(limit).exec();
 
             // if an _id was deleted, find the documents after the _id just before the one deleted, returning the same results.
             while (!appointments)
-                appointments = Appointment.find({ _id: { $lt: after } }).sort({ _id: -1 }).limit(1).lean().exec();
+                appointments = Appointment.find({ _id: { $lt: after } }).sort({ _id: -1 }).limit(1).exec();
 
             return new Response(null, appointments, false, 200);
         } else {
             if (!limit)
-                return new Response(null, await Appointment.find({ service }).lean().exec(), false, 200);
+                return new Response(null, await Appointment.find({ service }).exec(), false, 200);
 
             if (!after)
-                return new Response(null, await Appointment.find({ service }).limit(limit).lean().exec(), false, 200);
+                return new Response(null, await Appointment.find({ service }).limit(limit).exec(), false, 200);
 
-            let appointments = await Appointment.find({ service, _id: { $gt: after } }).limit(limit).lean().exec();
+            let appointments = await Appointment.find({ service, _id: { $gt: after } }).limit(limit).exec();
 
             // if an _id was deleted, find the documents after the _id just before the one deleted, returning the same results.
             while (!appointments)
-                appointments = await Appointment.find({ service, _id: { $lt: after } }).sort({ _id: -1 }).limit(1).lean().exec();
+                appointments = await Appointment.find({ service, _id: { $lt: after } }).sort({ _id: -1 }).limit(1).exec();
 
             return new Response(null, appointments, false, 200);
         }
@@ -103,11 +103,16 @@ module.exports = appointmentController = {
 
             let appointment = await Appointment.findById(appointmentInput._id).exec();
 
+            const isAlreadyFinished = appointment.isFinished;
+
+            if (isAlreadyFinished)
+                return new Response("Appointment Already Finished! Can't Edit!", null, false, 200);
+
             if (!appointment)
                 return new Response("Appointment Not Found!",
                     null, false, 200);
 
-            if (appointmentInput.state || appointmentInput.state == 0)
+            if (appointmentInput.state)
                 updatedFields.state = appointmentInput.state;
 
 
@@ -191,7 +196,8 @@ module.exports = appointmentController = {
 
             updatedAppointments.push(appointment);
 
-
+            if (appointment.isFinished)
+                await Employee.emptyStaffAtDate(this.allocatedStaff, this.date);
         }
         return new Response("Successfully updated selected appointment", updatedAppointments, false, 200);
     },

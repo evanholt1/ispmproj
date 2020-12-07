@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const { serviceNames, serviceStates } = require('../../utils/services');
 const { pointSchema } = require('../../utils/pointSchema')
 const { DateTime } = require('luxon');
-const services = require('../../utils/services');
 
 const AppointmentSchema = new Schema({
     user: {
@@ -28,7 +27,8 @@ const AppointmentSchema = new Schema({
     state: { // blood collection,hemodialysis, medicine delivery, home medical services have different states. 
         // business logic code will control this
         type: Number,
-        set: updateState
+        set: updateState,
+        get: getStateText
     },
     allocatedStaff: [{
         type: Schema.Types.ObjectId,
@@ -54,22 +54,20 @@ AppointmentSchema.
 pre('findOne', PreAutoPopulate).
 pre('find', PreAutoPopulate);
 
-const advanceState = function(service, currentState, nextStateIndex, isAppointmentFinished) {
+const advanceState = function(currentState, service, isAppointmentFinished) {
     switch (service) {
         case "Hemodialysis Request":
-            if (currentState < 4 && nextStateIndex - currentState === 1)
+            if (currentState < 3)
                 currentState += 1;
-            if (currentState == 3) { // appointment state is now "fufilled"
+            if (currentState == 3) // appointment state is now "fufilled"
                 isAppointmentFinished = true; // frees employees and isFinished becomes true
-            }
+
             break;
         default:
-            if (currentState < 6 && nextStateIndex - currentState === 1) {
+            if (currentState < 5)
                 currentState += 1;
-                if (currentState == 5) {
-                    isAppointmentFinished = true;
-                }
-            }
+            if (currentState == 5)
+                isAppointmentFinished = true;
             break;
     }
     return {
@@ -78,21 +76,18 @@ const advanceState = function(service, currentState, nextStateIndex, isAppointme
     };
 };
 
-const revertState = function(service, currentState, newState, isAppointmentFinished) {
+const revertState = function(currentState, service) {
     switch (service) {
         case "Hemodialysis Request":
-            if (currentState > -1 && currentState - newState === 1 && currentState != 3)
+            if (currentState > -1 && currentState != 3)
                 currentState -= 1;
             break;
         default:
-            if (currentState > -1 && currentState - newState === 1 && currentState != 5)
+            if (currentState > -1 && currentState != 5)
                 currentState -= 1;
             break;
     }
-    return {
-        'currentState': currentState,
-        'isFinished': isAppointmentFinished
-    };
+    return currentState;
 };
 
 
@@ -102,23 +97,65 @@ function toLocalDate(date) {
     return appointmentDate;
 }
 
-function updateState(newStateIndex) {
-    if (newStateIndex > this.state) {
-        const result = advanceState(this.service, this.state, newStateIndex, this.isFinished);
+function updateState(StateInput) {
+    if (StateInput == 1) {
+        const stateIndex = getStateIndex(this.state, this.service);
 
-        this.isFinished = result.isFinished;
+        const { currentState, isFinished } = advanceState(stateIndex, this.service, this.isFinished);
 
-        return result.currentState;
+        this.isFinished = isFinished;
 
-    } else if (newStateIndex < this.state) {
-        const result = revertState(this.service, this.state, newStateIndex, this.isFinished);
+        return currentState;
+    } else if (StateInput == -1) {
+        const stateIndex = getStateIndex(this.state, this.service);
 
-        this.isFinished = result.isFinished;
+        const newState = revertState(stateIndex, this.service, this.isFinished);
 
-        return result.currentState;
+        return newState;
     }
+    if (!this.state) return 0
+    else return this.state;
+    // if (newStateIndex > this.state) {
+    //     const result = advanceState(this.service, this.state, newStateIndex, this.isFinished);
 
-    return this.state; // no state change
+    //     this.isFinished = result.isFinished;
+
+    //     return result.currentState;
+
+    // } else if (newStateIndex < this.state) {
+    //     const result = revertState(this.service, this.state, newStateIndex, this.isFinished);
+
+    //     this.isFinished = result.isFinished;
+
+    //     return result.currentState;
+    // }
+
+    // return this.state; // no state change
 }
 
+function getStateText(stateIndex) {
+    switch (this.service) {
+        case "blood Collection":
+            return serviceStates.bloodCollectionStates[stateIndex];
+        case "Hemodialysis Request":
+            return serviceStates.hemodialysisStates[stateIndex];
+        case "Medicine Delivery to Home":
+            return serviceStates.medicineDeliveryStates[stateIndex];
+        default:
+            return serviceStates.homeMedicalServicesStates[stateIndex];
+    }
+}
+
+function getStateIndex(state, service) {
+    switch (service) {
+        case "blood Collection":
+            return serviceStates.bloodCollectionStates.indexOf(state);
+        case "Hemodialysis Request":
+            return serviceStates.hemodialysisStates.indexOf(state);
+        case "Medicine Delivery to Home":
+            return serviceStates.medicineDeliveryStates.indexOf(state);
+        default:
+            return serviceStates.homeMedicalServicesStates.indexOf(state);
+    }
+}
 module.exports = mongoose.model('Appointment', AppointmentSchema, "appointments");
