@@ -23,6 +23,18 @@ const EmployeeSchema = new Schema({
         end: {
             type: Number // format: 1230
         }
+    },
+    role: {
+        type: String,
+        enum: ['employee', 'admin']
+    },
+    email: {
+        type: String
+    },
+
+    password: {
+        type: String,
+        default: "hospital.jo"
     }
 });
 
