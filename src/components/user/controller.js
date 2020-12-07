@@ -1,7 +1,9 @@
 const User = require('./model');
+const Employee = require('../employee/model')
 const { options, signupSchema, signinSchema } = require('./validation');
 const { InputValidationError, EntityAlreadyExistsError, EntityDoesntExistError } = require('../../utils/errors')
-const { Response } = require('../../utils/response')
+const { Response } = require('../../utils/response');
+
 
 module.exports = userController = {
 
@@ -34,15 +36,26 @@ module.exports = userController = {
             throw new InputValidationError(err.details[0].path[0], err.details[0].message);
         }
 
-        const { email, password } = signinInput
+        const { email, password } = signinInput;
 
-        const user = await User.findOne({ email, password }).lean().exec();
+        let user;
+        let userRole;
+
+        if (email.includes("@hospital.jo")) {
+            user = await Employee.findOne({ email, password }).lean().exec();
+            userRole = user.role;
+        } else {
+            user = await User.findOne({ email, password }).lean().exec();
+            userRole = "user";
+        }
 
         if (!user)
             throw new EntityDoesntExistError("User")
 
         req.session._id = user._id;
         req.session.loginDate = Date.now();
+        req.session.role = userRole;
+        req.session.sessionDuration = 1000; // session duration in milliseconds
 
         return new Response("User successfully logged in", null, false, 200);
     },
