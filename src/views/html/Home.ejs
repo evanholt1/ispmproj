@@ -15,7 +15,8 @@
 
 <body>
     <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg pt-3 pb-5 navbar-light bg-light">
+        <%- include('navbar'); %>
+            <!-- <nav class="navbar navbar-expand-lg pt-3 pb-5 navbar-light bg-light">
             <a class="logo text-decoration-none p-2 pr-5" href="#">Healthcare</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
@@ -39,108 +40,109 @@
                     <button class="btn-outline rounded-pill" type="button" data-toggle="modal" data-target="#Modal">Sign up</button>
                 </form>
             </div>
-        </nav>
+        </nav> -->
 
-        <div class="d-flex flex-row justify-content-between">
-            <div class="description d-flex flex-column pl-5 pt-5">
-                <h1 class="font-weight-bold head-text">Why do we<br> use it?</h1>
-                <p class="w-50 bg-dark line mt-4">
-                    <hr>
-                </p>
-                <p class="text-color">Due to the Covid-19 epidemic the rate of transmission of infection<br> in the hospital is increasing so through our website you can request<br> any medical service and you will be in your home.</p>
+            <div class="d-flex flex-row justify-content-between">
+                <div class="description d-flex flex-column pl-5 pt-5">
+                    <h1 class="font-weight-bold head-text">Why do we<br> use it?</h1>
+                    <p class="w-50 bg-dark line mt-4">
+                        <hr>
+                    </p>
+                    <p class="text-color">Due to the Covid-19 epidemic the rate of transmission of infection<br> in the hospital is increasing so through our website you can request<br> any medical service and you will be in your home.</p>
+                    <% if(!sessionData.name) { %>
+                        <div class="btn-log "><button class="btn-login rounded-pill " type="submit" data-toggle="modal" data-target="#myModal">Login</button></div>
+                        <% } %>
+                </div>
 
-                <div class="btn-log "><button class="btn-login rounded-pill " type="submit" data-toggle="modal" data-target="#myModal">Login</button></div>
-            </div>
-
-            <div class="img mr-5 mt-5 pb-5">
-                <img src="../img/hosp.png" alt="" class="img-fluid" width="800px" height="800px">
-            </div>
-        </div>
-
-
-        <!-- login -->
-        <div class="modal fade" id="myModal">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Login</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <form class="">
-                            <div class="form-group text-white">
-                                <label for="exampleInputEmail1"></label>
-                                <input type="email" class="form-control rounded-pill border-log" id="exampleInputEmail1" placeholder="Email address">
-                                <small id="emailHelp" class="form-text">We'll never share your email with anyone else.</small>
-                            </div>
-
-                            <div class="form-group mt-n4">
-                                <label for="exampleInputPassword1"> </label>
-                                <input type="password" class="form-control rounded-pill  form-control1 border-log" id="exampleInputPassword1" placeholder="******">
-                            </div>
-
-                            <div class="sign-up">
-                                <p>Don't have an account?<a href="#" class="text-decoration-none" data-toggle="modal" data-target="#Modal"> Sign up</a></p>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn-outline rounded-pill" data-dismiss="modal">Login</button>
-                    </div>
-
+                <div class="img mr-5 mt-5 pb-5">
+                    <img src="../img/hosp.png" alt="" class="img-fluid" width="800px" height="800px">
                 </div>
             </div>
-        </div>
 
-        <!-- Sign up -->
-        <div class="modal fade" id="Modal">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
 
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Sign up</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <!-- login -->
+            <div class="modal fade" id="myModal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Login</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <form id="loginForm" action="/user/signin" method="POST">
+                                <div class="form-group text-white">
+                                    <label for="exampleInputEmail1"></label>
+                                    <input name="email" type="email" class="form-control rounded-pill border-log" id="exampleInputEmail1" placeholder="Email address">
+                                    <small id="emailHelp" class="form-text">We'll never share your email with anyone else.</small>
+                                </div>
+
+                                <div class="form-group mt-n4">
+                                    <label for="exampleInputPassword1"> </label>
+                                    <input name='password' type="password" class="form-control rounded-pill  form-control1 border-log" id="exampleInputPassword1" placeholder="******">
+                                </div>
+
+                                <div class="sign-up">
+                                    <p>Don't have an account?<a href="#" class="text-decoration-none" data-toggle="modal" data-target="#Modal"> Sign up</a></p>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="submit" form="loginForm" class="btn-outline rounded-pill">Login</button>
+                        </div>
+
                     </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1"></label>
-                            <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Name">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="exampleInputEmail1"></label>
-                            <input type="email" class="form-control" id="Email1" aria-describedby="emailHelp" placeholder="Email">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="exampleInputPassword1"></label>
-                            <input type="password" class="form-control" id="password" placeholder="Password">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="exampleInputPassword1"></label>
-                            <input type="password" class="form-control" id="pass" placeholder="Confirm Password">
-                        </div>
-
-                        </form>
-                    </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn-outline rounded-pill" data-dismiss="modal">Signup</button>
-                    </div>
-
                 </div>
             </div>
-        </div>
+
+            <!-- Sign up -->
+            <div class="modal fade" id="Modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Sign up</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <form id="signupForm" action="/user/signup" method="POST">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1"></label>
+                                    <input name='name' type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1"></label>
+                                    <input name='email' type="email" class="form-control" id="Email1" aria-describedby="emailHelp" placeholder="Email">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1"></label>
+                                    <input name='password' type="password" class="form-control" id="password" placeholder="Password">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1"></label>
+                                    <input name='passwordConfirmation' type="password" class="form-control" id="pass" placeholder="Confirm Password">
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="submit" form="signupForm" class="btn-outline rounded-pill">Signup</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
     </div>
 </body>
 

@@ -1,0 +1,74 @@
+<nav class="navbar navbar-expand-lg pt-3 pb-5 navbar-light bg-light row">
+    <a class="logo text-decoration-none p-2 pr-4" href="#">Healthcare</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="#navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+                <a class="nav-link collapse-color pt-3 pr-2" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <% if(sessionData.role === "user") { %>
+                <li class="nav-item ">
+                    <a class="nav-link collapse-color pt-3 pr-2" href="/bookAppointment">Book Appointment</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link collapse-color pt-3 pr-2" href="/appointment/user/<%= sessionData._id %>">Appointments</a>
+                </li>
+                <% } else if(sessionData.role === "admin" || sessionData.role === "employee") { %>
+                    <li class="nav-item ">
+                        <a class="nav-link collapse-color pt-3 pr-2" href="/employee">Employees</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link collapse-color pt-3 pr-2" href="/appointment">Appointments</a>
+                    </li>
+                    <% } %>
+        </ul>
+    </div>
+
+    <div class="collapse  navbar-collapse pt-2 d-flex justify-content-end " id="navbarSupportedContent">
+        <div>
+            <% if(sessionData.name) { %>
+                <ul class="navbar-nav mr-auto nav-li">
+
+                    <li class="nav-item dropdown nav-drop ml-3">
+                        <a class="nav-link dropdown-toggle nav-name" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <svg width="1.3em" height="1.3em" viewBox="0 0 16 16" class="bi" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                        </svg>
+                            <%= sessionData.name %>
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Settings</a>
+                            <a class="dropdown-item" href="#">About us</a>
+                            <div class="dropdown-divider"></div>
+                            <form action="/user/signout" method="POST" id='logoutForm'>
+                                <a id='logoutSubmit' class="dropdown-item">Sign Out</a>
+                            </form>
+
+                        </div>
+                    </li>
+                </ul>
+                <% } else { %>
+                    <form class="form-inline my-2 my-lg-0">
+                        <button class="btn-outline rounded-pill" type="button" data-toggle="modal" data-target="#Modal">Sign up</button>
+                        <button class="btn-outline rounded-pill " type="button" data-toggle="modal" data-target="#myModal">Login</button>
+                    </form>
+                    <div class="btn-log "></div>
+                    <% } %>
+        </div>
+
+    </div>
+</nav>
+
+<script>
+    if (document.getElementById("logoutForm")) {
+        var form = document.getElementById("logoutForm");
+        document.getElementById("logoutSubmit").addEventListener("click", function() {
+            form.submit();
+        });
+    }
+</script>

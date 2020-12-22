@@ -55,6 +55,7 @@ module.exports = userController = {
         req.session._id = user._id;
         req.session.loginDate = Date.now();
         req.session.role = userRole;
+        req.session.name = user.name;
         req.session.sessionDuration = 1000; // session duration in milliseconds
 
         return new Response("User successfully logged in", null, false, 200);

@@ -14,7 +14,7 @@ const startServer = async() => {
 
     app.use(express.json());
 
-
+    app.use(express.urlencoded({ extended: true }));
 
     await mongoose.connect(process.env.DB_HOST, {
         useNewUrlParser: true,
@@ -37,6 +37,7 @@ const startServer = async() => {
         saveUninitialized: false,
         unset: "destroy",
         cookie: {
+            sameSite: "lax",
             maxAge: 1000 * 60 * 60 * 24 // 1 day
                 //expires: new Date(new Date().setFullYear(new Date().getFullYear() + 1))
         },

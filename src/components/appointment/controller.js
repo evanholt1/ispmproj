@@ -8,7 +8,6 @@ const { services } = require('../../utils/services');
 const Employee = require('../employee/model');
 
 
-
 module.exports = appointmentController = {
     getOneById: async(id) => {
         await validateInput(validators.getOneAppointmentSchema, id, validators.options);
@@ -54,6 +53,11 @@ module.exports = appointmentController = {
 
             return new Response(null, appointments, false, 200);
         }
+    },
+
+    getUserMany: async(id) => {
+        let userAppointments = await Appointment.find({ user: id }).exec();
+        return new Response(null, userAppointments, false, 200);
     },
 
     addMany: async(appointmentsInputs) => {
@@ -206,13 +210,13 @@ module.exports = appointmentController = {
         await validateInput(validators.removeAppointmentsSchema, appointmentsIds, validators.options);
 
         const appointmentsToDelete = await Appointment.find({ _id: { $in: appointmentsIds } }).exec();
+        for (appointment of appointmentsToDelete) {
+            await Employee.emptyStaffAtDate(appointment.allocatedStaff, appointment.date);
 
-        appointmentsToDelete.forEach(appointment => {
             appointment.remove();
 
             appointment = appointment._doc;
-        });
-
+        }
         return new Response(null, appointmentsToDelete, false, 200);
     }
 }

@@ -2,22 +2,27 @@ const express = require('express');
 const router = express.Router({ mergeParams: true })
 
 const controller = require('./controller');
-const { validateSession, adminAuthorization } = require('../../utils/identity');
+const { validateSession, employeeAuthorization, adminAuthorization } = require('../../utils/identity');
+const { serviceDepartments } = require('../../utils/services')
 
-
-router.get('/', async(req, res, next) => {
+router.get('/', validateSession, employeeAuthorization, async(req, res, next) => {
     try {
         const result = await controller.getMany(req.query);
 
         const { statusCode, ...response } = result;
 
-        res.status(statusCode).json(response);
+        //res.status(statusCode).json(response);
+        res.status(statusCode).render('employee', {
+            sessionData: req.session,
+            data: response.data,
+            departments: serviceDepartments
+        });
     } catch (err) {
         next(err);
     }
 })
 
-router.get('/:id', async(req, res, next) => {
+router.get('/:id', validateSession, employeeAuthorization, async(req, res, next) => {
     try {
         const result = await controller.getOneById(req.params.id);
 

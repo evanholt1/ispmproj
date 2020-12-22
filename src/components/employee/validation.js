@@ -34,7 +34,11 @@ const editEmployeeSchema = Joi.object({
         end: Joi.number()
     }),
 
-    role: Joi.string().valid("employee", "admin")
+    role: Joi.string().valid("employee", "admin"),
+
+    department: Joi.string().valid(...serviceDepartments),
+
+    email: Joi.string().email()
 })
 
 

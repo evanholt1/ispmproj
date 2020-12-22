@@ -1,23 +1,50 @@
-const express = require('express');
-const router = express.Router({ mergeParams: true })
+const express = require("express");
+const router = express.Router({ mergeParams: true });
 
-const controller = require('./controller');
-const { validateSession, employeeAuthorization } = require('../../utils/identity');
+const controller = require("./controller");
+const {
+    validateSession,
+    employeeAuthorization,
+} = require("../../utils/identity");
+const { serviceDepartments, serviceNames } = require("../../utils/services");
 
-
-router.get('/', async(req, res, next) => {
+router.get("/", async (req, res, next) => {
     try {
         const result = await controller.getMany(req.query);
 
         const { statusCode, ...response } = result;
 
-        res.status(statusCode).json(response);
+        //res.status(statusCode).json(response);
+        res.status(statusCode).render("appointment", {
+            sessionData: req.session,
+            data: response.data,
+            services: serviceNames,
+            isUserPage: false,
+        });
     } catch (err) {
         next(err);
     }
-})
+});
 
-router.get('/:id', async(req, res, next) => {
+router.get("/user/:userId", validateSession, async (req, res, next) => {
+    try {
+        const result = await controller.getUserMany(req.params.userId);
+
+        const { statusCode, ...response } = result;
+
+        //res.status(statusCode).json(response);
+        res.status(statusCode).render("appointment", {
+            sessionData: req.session,
+            data: response.data,
+            services: serviceNames,
+            isUserPage: true,
+        });
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get("/:id", async (req, res, next) => {
     try {
         const result = await controller.getOneById(req.params.id);
 
@@ -27,9 +54,9 @@ router.get('/:id', async(req, res, next) => {
     } catch (err) {
         next(err);
     }
-})
+});
 
-router.post('/', validateSession, async(req, res, next) => {
+router.post("/", validateSession, async (req, res, next) => {
     try {
         const result = await controller.addMany(req.body);
 
@@ -41,7 +68,7 @@ router.post('/', validateSession, async(req, res, next) => {
     }
 });
 
-router.patch('/', validateSession, async(req, res, next) => {
+router.patch("/", validateSession, async (req, res, next) => {
     try {
         const result = await controller.editMany(req.body);
 
@@ -53,7 +80,7 @@ router.patch('/', validateSession, async(req, res, next) => {
     }
 });
 
-router.delete('/', validateSession, async(req, res, next) => {
+router.delete("/", validateSession, async (req, res, next) => {
     try {
         const result = await controller.removeMany(req.body);
 
@@ -64,6 +91,5 @@ router.delete('/', validateSession, async(req, res, next) => {
         next(err);
     }
 });
-
 
 module.exports = router;
