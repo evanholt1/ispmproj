@@ -337,11 +337,15 @@
                             modal.find('.modal-body #currentState').val(state);
 
                             for(staff of allocatedStaff)
-                            document.getElementById("staffRow").innerHTML +=
+                            {
+                                console.log(allocatedStaff);
+                                document.getElementById("staffRow").innerHTML +=
                             `<div class='w-100'><input type="text" class="form-control w-100" value="${staff.name}" />
             <div class="py-1">
-                <label class="btn btn-danger">Switch<input onclick='addStaff(this)'type='radio' value='<%= staff._id %>' name='staff'/></label>
+                <label class="btn btn-danger">Switch<input onclick='addStaff(this)'type='radio' value=' ${staff._id} ' name='staff'/></label>
             </div></div>`
+                            }
+
                         });
                         var staffToChange = [];
                                     function updateAppointment() {
