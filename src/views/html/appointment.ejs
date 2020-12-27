@@ -88,25 +88,6 @@
                     },
                 });
                 graphicsLayer.add(pictureGraphic);
-
-                view.on("click", function (event) {
-                    coords.latitude = view.toMap({
-                        x: event.x,
-                        y: event.y,
-                    }).latitude;
-                    coords.longitude = view.toMap({
-                        x: event.x,
-                        y: event.y,
-                    }).longitude;
-
-                    pictureGraphic.geometry.latitude = coords.latitude;
-                    pictureGraphic.geometry.longitude = coords.longitude;
-
-                    document.getElementById("latitude").value = coords.latitude;
-                    document.getElementById("longtitude").value = coords.longitude;
-
-                    graphicsLayer.add(pictureGraphic);
-                });
             }); // main
         </script>
     </head>
@@ -336,6 +317,9 @@
                             modal.find('.modal-body #updateId').val(_id)
                             modal.find('.modal-body #currentState').val(state);
 
+                            var state = button.data("state");
+                            var allocatedStaff = button.data("staff");
+                            if (<%= !isUserPage %>) {
                             for(staff of allocatedStaff)
                             {
                                 console.log(allocatedStaff);
@@ -345,6 +329,7 @@
                 <label class="btn btn-danger">Switch<input onclick='addStaff(this)'type='radio' value=' ${staff._id} ' name='staff'/></label>
             </div></div>`
                             }
+                        }
 
                         });
                         var staffToChange = [];
@@ -374,8 +359,8 @@
                                         })
                                             .then((res) => res.json())
                                             .then((res) => {
-                                                if(res.error)
-                                                    document.getElementById('updateResult').innerText= res.message.substring(4)
+                                                if(res.error || !res.data)
+                                                    document.getElementById('updateResult').innerText= res.message
                                                 else {
                                                     document.getElementById('updateResult').innerText= "Update Successful";
                                                     setTimeout(function() {
